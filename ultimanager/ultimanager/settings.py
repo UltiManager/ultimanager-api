@@ -239,6 +239,18 @@ USE_TZ = True
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
+# Store files in S3
+
+if env_bool("USE_S3_STORAGE"):
+    DEFAULT_FILE_STORAGE = "custom_storages.backends.MediaStorage"
+    STATICFILES_STORAGE = "custom_storages.backends.StaticStorage"
+
+    AWS_S3_OBJECT_PARAMETERS = {"CacheControl": "max-age=31536000"}
+    AWS_S3_REGION_NAME = env_param("AWS_REGION")
+
+    S3_BUCKET_MEDIA = env_param("S3_BUCKET_MEDIA")
+    S3_BUCKET_STATIC = env_param("S3_BUCKET_STATIC")
+
 
 # Sentry Configuration
 

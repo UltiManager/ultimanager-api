@@ -14,6 +14,7 @@ sentry-sdk = "*"
 gunicorn = "*"
 psycopg2-binary = "*"
 requests = "*"
+django-storages = "*"
 
 [requires]
 python_version = "3.7"
