@@ -9,8 +9,11 @@ https://docs.djangoproject.com/en/2.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
+
 import logging
 import os
+
+import requests
 
 
 def env_bool(name: str, default=False) -> bool:
@@ -94,6 +97,19 @@ SECRET_KEY = env_param("SECRET_KEY", is_required=not DEBUG, default="secret")
 
 
 ALLOWED_HOSTS = env_list("ALLOWED_HOSTS")
+
+# If we are running in an ECS environment, we need to add the IP of the
+# host machine running the task. This is needed because the load
+# balancer checks the status endpoint on the private IP rather than the
+# domain name we have set up.
+if env_bool("IS_ECS_ENVIRONMENT"):
+    resp = requests.get("http://169.254.170.2/v2/metadata")
+    data = resp.json()
+
+    container_meta = data["Containers"][0]
+    private_ip = container_meta["Networks"][0]["IPv4Addresses"][0]
+
+    ALLOWED_HOSTS.append(private_ip)
 
 
 # Application definition
