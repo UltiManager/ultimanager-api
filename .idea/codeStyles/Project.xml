@@ -6,6 +6,7 @@
         <option name="TAB_SIZE" value="2" />
       </value>
     </option>
+    <option name="SOFT_MARGINS" value="72,79" />
     <codeStyleSettings language="CSS">
       <indentOptions>
         <option name="INDENT_SIZE" value="2" />

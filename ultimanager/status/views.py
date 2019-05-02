@@ -5,7 +5,8 @@ from django.http import HttpResponse
 
 def health_check(_):
     """
-    Check the status of the application. A 200 response will be returned if the application is healthy.
+    Check the status of the application. A 200 response will be returned
+    if the application is healthy.
     """
     # The following code is taken from:
     # https://engineering.instawork.com/elegant-database-migrations-on-ecs-74f3487da99f
