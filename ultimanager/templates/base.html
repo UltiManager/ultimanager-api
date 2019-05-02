@@ -1,0 +1,20 @@
+{% load static %}
+
+<!doctype html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width">
+
+    <title>{% block title %}UltiManager{% endblock %}</title>
+
+    <!-- Stylesheets -->
+      <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto:500" rel="stylesheet">
+      <link href="{% static 'main.css' %}" rel="stylesheet">
+
+    {# Extra styles required for a specific page. #}
+    {% block extra_styles %}{% endblock %}
+  </head>
+  <body>
+    {% block content %}{% endblock %}
+  </body>
+</html>
