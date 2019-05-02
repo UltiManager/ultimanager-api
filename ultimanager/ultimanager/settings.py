@@ -143,12 +143,28 @@ WSGI_APPLICATION = "ultimanager.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
+DATABASE_TYPE = env_param(
+    "DB_TYPE", is_required=False, default="sqlite"
+).lower()
+
+if DATABASE_TYPE == "postgres":
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql_psycopg2",
+            "HOST": env_param("DB_HOST"),
+            "NAME": env_param("DB_NAME"),
+            "PASSWORD": env_param("DB_PASSWORD"),
+            "PORT": env_param("DB_PORT", is_required=False, default="5432"),
+            "USER": env_param("DB_USER"),
+        }
     }
-}
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
+        }
+    }
 
 
 # Password validation
