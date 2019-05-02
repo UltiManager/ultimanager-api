@@ -200,6 +200,25 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+# Security Settings (HTTPS Related)
+
+if env_bool("IS_HTTPS"):
+    CSRF_COOKIE_SECURE = True
+    SESSION_COOKIE_SECURE = True
+
+    # If Django is running behind a load balancer that terminates SSL we
+    # can use the following header to determine if the original
+    # connection came over HTTPS.
+    SSL_PROXY_HEADER_NAME = env_param(
+        "SSL_PROXY_HEADER_NAME", is_required=False, default=None
+    )
+    if SSL_PROXY_HEADER_NAME:
+        SECURE_PROXY_SSL_HEADER = (
+            SSL_PROXY_HEADER_NAME,
+            env_param("SSL_PROXY_HEADER_VALUE"),
+        )
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
