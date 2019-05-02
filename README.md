@@ -2,6 +2,10 @@
 
 The Django application powering the UltiManager website.
 
+## Contributing
+
+Please see the [`CONTRIBUTING.md`](CONTRIBUTING.md) file for instructions.
+
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
