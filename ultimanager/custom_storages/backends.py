@@ -5,7 +5,22 @@ from django.contrib.staticfiles.storage import ManifestFilesMixin
 from storages.backends.s3boto3 import S3Boto3Storage
 
 
-class MediaStorage(S3Boto3Storage):
+class PatchedS3StaticStorage(S3Boto3Storage):
+    def _save(self, name, content):
+        if (
+            hasattr(content, "seek")
+            and hasattr(content, "seekable")
+            and content.seekable()
+        ):
+            content.seek(0)
+        return super()._save(name, content)
+
+
+class CachedS3Storage(ManifestFilesMixin, PatchedS3StaticStorage):
+    pass
+
+
+class MediaStorage(CachedS3Storage):
     """
     Storage class for media files.
 
