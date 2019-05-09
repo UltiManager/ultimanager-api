@@ -122,6 +122,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     # Custom Apps
+    "account",
     "landing",
 ]
 
@@ -181,6 +182,11 @@ else:
             "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
         }
     }
+
+
+# Custom User Model
+
+AUTH_USER_MODEL = "account.User"
 
 
 # Password validation

@@ -20,9 +20,9 @@ matrix:
       script:
         - pipenv run black --check .
         - pipenv run flake8
+        - pipenv run coverage run -m pytest ultimanager/
 
       after_success:
-        - pipenv run coverage combine
         - pipenv run codecov
 
     # Test building the docker image

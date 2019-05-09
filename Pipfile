@@ -7,6 +7,10 @@ verify_ssl = true
 pre-commit = "*"
 black = "*"
 flake8 = "*"
+pytest = "*"
+pytest-django = "*"
+coverage = "*"
+codecov = "*"
 
 [packages]
 django = "*"
