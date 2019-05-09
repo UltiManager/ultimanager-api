@@ -1,0 +1,9 @@
+[run]
+branch = True
+omit = \
+    */functional_tests/*,
+    */migrations/*,
+    */test_utils/*,
+    */test/*,
+    */manage.py
+source = ultimanager
