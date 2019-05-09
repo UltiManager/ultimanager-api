@@ -11,6 +11,10 @@ pytest = "*"
 pytest-django = "*"
 coverage = "*"
 codecov = "*"
+sphinx = "*"
+sphinx-autobuild = "*"
+sphinx-rtd-theme = "*"
+sphinxcontrib-napoleon = "*"
 
 [packages]
 django = "*"
