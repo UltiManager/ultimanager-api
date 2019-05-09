@@ -26,6 +26,7 @@ sys.path.insert(
 # -- Set up Django Project --------------------------------------------------
 
 os.environ["DJANGO_SETTINGS_MODULE"] = "ultimanager.settings"
+os.environ["SECRET_KEY"] = "docs"
 django.setup()
 
 
