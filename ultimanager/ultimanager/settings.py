@@ -125,6 +125,7 @@ INSTALLED_APPS = [
     "account",
     "core",
     "landing",
+    "teams",
 ]
 
 MIDDLEWARE = [
