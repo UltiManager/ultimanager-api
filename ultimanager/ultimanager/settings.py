@@ -123,6 +123,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # Custom Apps
     "account",
+    "core",
     "landing",
 ]
 
