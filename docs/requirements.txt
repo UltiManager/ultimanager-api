@@ -4,7 +4,7 @@ botocore==1.12.145
 certifi==2019.3.9
 chardet==3.0.4
 django-storages==1.7.1
-django==2.2.1
+django==2.2.4
 docutils==0.14
 gunicorn==19.9.0
 idna==2.8
