@@ -17,13 +17,14 @@ sphinx-rtd-theme = "*"
 sphinxcontrib-napoleon = "*"
 
 [packages]
-django = "*"
+django = "<2.3,>=2.2"
 sentry-sdk = "*"
 gunicorn = "*"
 psycopg2-binary = "*"
 requests = "*"
 django-storages = "*"
 boto3 = "*"
+django-simple-email-auth = "*"
 
 [requires]
 python_version = "3.7"

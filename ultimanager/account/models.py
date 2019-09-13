@@ -12,17 +12,8 @@ class User(PermissionsMixin, AbstractBaseUser, BaseModel):
     A single user's account.
     """
 
-    REQUIRED_FIELDS = ("name",)
-    USERNAME_FIELD = "email"
+    USERNAME_FIELD = "name"
 
-    email = models.EmailField(
-        help_text=_(
-            "The user's email address. Used for logging in and receiving "
-            "communications."
-        ),
-        unique=True,
-        verbose_name=_("email address"),
-    )
     is_active = models.BooleanField(
         default=True,
         help_text=_(

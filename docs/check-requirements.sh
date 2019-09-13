@@ -15,6 +15,9 @@ echo "Temporary requirements file: ${TEMP_REQUIREMENTS}"
 pipenv lock --requirements > ${TEMP_REQUIREMENTS}
 pipenv lock --dev --requirements >> ${TEMP_REQUIREMENTS}
 
+# De-duplicate
+cat "${TEMP_REQUIREMENTS}" | sort | uniq > "${TEMP_REQUIREMENTS}"
+
 echo "Finished generating requirements to check against."
 
 # Compare the expected requirements to the actual requirements. If the files
@@ -27,7 +30,6 @@ echo "Finished generating requirements to check against."
   echo "$1 is out of sync."
   echo
   echo "Please run:"
-  echo "    pipenv lock --requirements > $1"
-  echo "    pipenv lock --dev --requirements >> $1"
+  echo "    lock-requirements.sh $1"
   exit 1
 )

@@ -85,6 +85,13 @@ def env_param(name: str, is_required=True, default=None) -> str:
     return os.getenv(name, default)
 
 
+SILENCED_SYSTEM_CHECKS = [
+    # Our authentication system relies on unique emails rather than
+    # unique usernames.
+    "auth.W004"
+]
+
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -121,6 +128,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    # Third-Party Apps
+    "email_auth",
     # Custom Apps
     "account",
     "core",
@@ -189,6 +198,11 @@ else:
 # Custom User Model
 
 AUTH_USER_MODEL = "account.User"
+
+
+# Authenticate with email addresses
+
+AUTHENTICATION_BACKENDS = ["email_auth.authentication.VerifiedEmailBackend"]
 
 
 # Password validation

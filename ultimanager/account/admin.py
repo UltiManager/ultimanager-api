@@ -11,12 +11,10 @@ class UserAdmin(BaseUserAdmin):
     Admin for the :py:class:`User` model.
     """
 
-    add_fieldsets = (
-        (None, {"fields": ("email", "name", "password1", "password2")}),
-    )
+    add_fieldsets = ((None, {"fields": ("name", "password1", "password2")}),)
     date_hierarchy = "time_created"
     fieldsets = (
-        (_("Personal Information"), {"fields": ("email", "name", "password")}),
+        (_("Personal Information"), {"fields": ("name", "password")}),
         (
             _("Permissions"),
             {
@@ -38,7 +36,6 @@ class UserAdmin(BaseUserAdmin):
         ),
     )
     list_display = (
-        "email",
         "name",
         "is_active",
         "is_staff",
@@ -48,4 +45,4 @@ class UserAdmin(BaseUserAdmin):
     )
     ordering = ("time_created",)
     readonly_fields = ("time_created", "time_updated")
-    search_fields = ("email", "name")
+    search_fields = ("email_address__address", "name")
