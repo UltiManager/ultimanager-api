@@ -1,13 +1,6 @@
 from account import models, managers
 
 
-def test_get_email_field_name():
-    """
-    Users should use their 'email' field to store their email address.
-    """
-    assert models.User.get_email_field_name() == "email"
-
-
 def test_get_full_name():
     """
     The user's full name should be equal to their name.
@@ -28,11 +21,11 @@ def test_get_short_name():
 
 def test_get_username():
     """
-    A user's username should be their email address.
+    A user's username should be their name.
     """
-    user = models.User(email="test@example.com")
+    user = models.User(name="Test User")
 
-    assert user.get_username() == user.email
+    assert user.get_username() == user.name
 
 
 def test_objects_type():
