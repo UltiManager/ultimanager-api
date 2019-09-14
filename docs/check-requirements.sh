@@ -9,27 +9,21 @@
 
 set -euf
 
-# Generate the expected version of the requirements file
-TEMP_REQUIREMENTS="$(mktemp /tmp/sync-requirements.XXXXXX)"
-echo "Temporary requirements file: ${TEMP_REQUIREMENTS}"
-pipenv lock --requirements > ${TEMP_REQUIREMENTS}
-pipenv lock --dev --requirements >> ${TEMP_REQUIREMENTS}
+# Check for each package currently specified in Pipfile.lock within the docs
+# requirements file.
+pipenv lock --requirements | while read line; do
+  grep -q -- "${line}" $1 || (
+    echo "$1 does not contain the line:"
+    echo $line
+    exit 1
+  )
+done
 
-# De-duplicate
-cat "${TEMP_REQUIREMENTS}" | sort | uniq > "${TEMP_REQUIREMENTS}"
+pipenv lock --dev --requirements | while read line; do
+  grep -q -- "${line}" $1 || (
+    echo "$1 does not contain the line:"
+    echo $line
+    exit 1
+  )
+done
 
-echo "Finished generating requirements to check against."
-
-# Compare the expected requirements to the actual requirements. If the files
-# are not equal, we exit with an error code and tell the user how to update the
-# file.
-(
-  cmp $1 ${TEMP_REQUIREMENTS} || exit 1
-  echo "$1 is up to date."
-) || (
-  echo "$1 is out of sync."
-  echo
-  echo "Please run:"
-  echo "    lock-requirements.sh $1"
-  exit 1
-)
