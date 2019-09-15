@@ -12,6 +12,7 @@ class User(PermissionsMixin, AbstractBaseUser, BaseModel):
     A single user's account.
     """
 
+    NAME_LENGTH = 100
     USERNAME_FIELD = "name"
 
     is_active = models.BooleanField(
@@ -40,7 +41,7 @@ class User(PermissionsMixin, AbstractBaseUser, BaseModel):
     )
     name = models.CharField(
         help_text=_("A publicly displayed name for the user."),
-        max_length=100,
+        max_length=NAME_LENGTH,
         verbose_name=_("name"),
     )
 

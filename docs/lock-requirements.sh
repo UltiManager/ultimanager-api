@@ -25,5 +25,5 @@ pipenv lock --requirements > "$1"
 pipenv lock --dev --requirements >> "$1"
 
 # De-duplicate lines
-cat "$1" | sort | uniq | tee "$1"
+cat "$1" | LC_COLLATE=c sort | uniq | tee "$1"
 
