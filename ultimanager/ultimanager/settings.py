@@ -132,6 +132,7 @@ INSTALLED_APPS = [
     "email_auth",
     # Custom Apps
     "account",
+    "account.api",
     "core",
     "landing",
     "teams",

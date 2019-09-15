@@ -5,7 +5,7 @@ matrix:
   include:
     # Test suite for the application itself
     - language: python
-      python: 3.7
+      python: "3.7"
 
       cache: pip
 
@@ -22,6 +22,7 @@ matrix:
         - pipenv run black --check .
         - pipenv run flake8
         - pipenv run coverage run -m pytest ultimanager/
+        - pipenv run pytest ultimanager/functional_tests
 
       after_success:
         - pipenv run codecov
@@ -33,7 +34,7 @@ matrix:
         - docker
 
       script:
-        - docker build -t ultimanager-web .
+        - docker build -t ultimanager-api .
 
 
 notifications:
