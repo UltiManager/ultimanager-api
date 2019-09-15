@@ -130,6 +130,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # Third-Party Apps
     "email_auth",
+    "rest_framework",
     # Custom Apps
     "account",
     "account.api",
