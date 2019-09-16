@@ -129,6 +129,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     # Third-Party Apps
+    "corsheaders",
     "email_auth",
     "rest_framework",
     # Custom Apps
@@ -140,6 +141,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -262,6 +264,17 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+
+
+# Email Configuration
+
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+
+# CORS Headers
+
+CORS_ORIGIN_ALLOW_ALL = True
+
 
 # Store files in S3
 

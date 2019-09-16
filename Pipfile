@@ -27,6 +27,7 @@ django-storages = "*"
 boto3 = "*"
 django-simple-email-auth = "*"
 djangorestframework = "*"
+django-cors-headers = "*"
 
 [requires]
 python_version = "3.7"
