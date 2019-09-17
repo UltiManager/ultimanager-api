@@ -7,5 +7,10 @@ app_name = "account:api"
 
 
 urlpatterns = [
-    path("users/", views.UserCreateView.as_view(), name="user-create")
+    path(
+        "email-verifications/",
+        views.EmailVerificationView.as_view(),
+        name="email-verification-create",
+    ),
+    path("users/", views.UserCreateView.as_view(), name="user-create"),
 ]
