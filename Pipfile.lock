@@ -70,11 +70,11 @@
         },
         "django-simple-email-auth": {
             "hashes": [
-                "sha256:79e32611d40a73fc8aae9ed5b57f9a448d4903a261d0fcb41ebbde51f04460f4",
-                "sha256:9547da97b0b5162170ed181685f5c74123e4c9f2036099dbe0626bccdb08342c"
+                "sha256:c3dd70781e302d7d932072c439a6c1629baeb0bfd9d1dad44115ea66366c41ad",
+                "sha256:f2f2dbe52629b7dd6207f4f50dd38de3d6eb8438acce6ac8a3e7cf1324f2b804"
             ],
             "index": "pypi",
-            "version": "==0.3.0"
+            "version": "==0.3.1"
         },
         "django-storages": {
             "hashes": [
