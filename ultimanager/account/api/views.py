@@ -39,6 +39,16 @@ class PasswordResetRequestView(generics.CreateAPIView):
     serializer_class = serializers.PasswordResetRequestSerializer
 
 
+class PasswordResetView(generics.CreateAPIView):
+    """
+    post:
+    Reset the user's password using a valid password reset token to
+    authorize the operation.
+    """
+
+    serializer_class = serializers.PasswordResetSerializer
+
+
 class UserCreateView(generics.CreateAPIView):
     """
     post:

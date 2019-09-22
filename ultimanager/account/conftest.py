@@ -1,7 +1,7 @@
 from unittest import mock
 
 import pytest
-from email_auth.models import EmailAddress, EmailVerification
+from email_auth.models import EmailAddress, EmailVerification, PasswordReset
 
 
 @pytest.fixture
@@ -21,4 +21,13 @@ def mock_email_verification_qs():
     with mock.patch(
         "email_auth.models.EmailVerification.objects", new=mock_qs
     ):
+        yield mock_qs
+
+
+@pytest.fixture
+def mock_password_reset_qs():
+    mock_qs = mock.Mock(spec=PasswordReset.objects)
+    mock_qs.all.return_value = mock_qs
+
+    with mock.patch("email_auth.models.PasswordReset.objects", new=mock_qs):
         yield mock_qs

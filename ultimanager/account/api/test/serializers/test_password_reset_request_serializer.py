@@ -3,17 +3,7 @@ from unittest import mock
 from email_auth.models import EmailAddress
 
 from account.api import serializers
-
-
-def return_for_conditions(obj, raise_ex=False, **kwargs):
-    def handler(**inner_kwargs):
-        if kwargs.items() <= inner_kwargs.items():
-            if raise_ex:
-                raise obj
-
-            return obj
-
-    return handler
+from account.api.test_utils import return_for_conditions
 
 
 def test_save_unregistered_email(mock_email_address_qs):
