@@ -4,7 +4,12 @@ import email_utils
 from django.conf import settings
 from django.contrib.auth import password_validation
 from django.utils.translation import ugettext_lazy as _
-from email_auth.models import EmailAddress, TOKEN_LENGTH, EmailVerification
+from email_auth.models import (
+    EmailAddress,
+    TOKEN_LENGTH,
+    EmailVerification,
+    PasswordReset,
+)
 from rest_framework import serializers
 
 from account import models
@@ -104,6 +109,37 @@ class EmailVerificationSerializer(serializers.Serializer):
             )
 
         return token
+
+
+class PasswordResetRequestSerializer(serializers.Serializer):
+    """
+    Serializer to create and send a password reset token to a verified
+    email address.
+    """
+
+    email = serializers.EmailField()
+
+    def save(self, **kwargs) -> Optional[PasswordReset]:
+        """
+        Send a new password reset token to the provided email address if
+        the email has already been verified. If the provided email has
+        not been verified, no action is taken.
+
+        Returns:
+            The created :py:class:`PasswordReset` instance if one was
+            created or else ``None``.
+        """
+        try:
+            email = EmailAddress.objects.get(
+                address__iexact=self.validated_data["email"], is_verified=True
+            )
+        except EmailAddress.DoesNotExist:
+            return None
+
+        reset = PasswordReset(email=email)
+        reset.send_email()
+
+        return reset
 
 
 class UserCreationSerializer(serializers.Serializer):
