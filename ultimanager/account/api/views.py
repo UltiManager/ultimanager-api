@@ -26,6 +26,29 @@ class EmailVerificationView(generics.CreateAPIView):
     serializer_class = serializers.EmailVerificationSerializer
 
 
+class PasswordResetRequestView(generics.CreateAPIView):
+    """
+    post:
+    Send a token to the provided email address that the user can use to
+    reset their password.
+
+    If the provided email address has not been verified or has not been
+    registered with our system, no email is sent.
+    """
+
+    serializer_class = serializers.PasswordResetRequestSerializer
+
+
+class PasswordResetView(generics.CreateAPIView):
+    """
+    post:
+    Reset the user's password using a valid password reset token to
+    authorize the operation.
+    """
+
+    serializer_class = serializers.PasswordResetSerializer
+
+
 class UserCreateView(generics.CreateAPIView):
     """
     post:

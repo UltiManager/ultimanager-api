@@ -16,6 +16,7 @@ sphinx-autobuild = "*"
 sphinx-rtd-theme = "*"
 sphinxcontrib-napoleon = "*"
 requests = "*"
+ipython = "*"
 
 [packages]
 django = "<2.3,>=2.2"
