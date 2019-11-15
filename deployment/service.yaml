@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ultimanager-api
+  labels:
+    app: ultimanager-api
+spec:
+  selector:
+    app: ultimanager-api
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 8000

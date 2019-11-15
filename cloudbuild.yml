@@ -1,6 +1,63 @@
 steps:
   - name: "gcr.io/cloud-builders/docker"
-    args: ["build", "-t", "gcr.io/$PROJECT_ID/ultimanager-api:$COMMIT_SHA", "."]
+    args: ["build", "-t", "gcr.io/$PROJECT_ID/${_IMAGE_NAME}:$COMMIT_SHA", "."]
 
-images:
-  - "gcr.io/$PROJECT_ID/ultimanager-api:$COMMIT_SHA"
+  - name: "gcr.io/cloud-builders/docker"
+    args: ["push", "gcr.io/$PROJECT_ID/${_IMAGE_NAME}:$COMMIT_SHA"]
+
+  # Clone the cluster state repository.
+  - name: "gcr.io/cloud-builders/gcloud"
+    id: Clone env repository
+    entrypoint: /bin/sh
+    volumes:
+      - name: cluster-state
+        path: /cluster-state
+    args:
+      - "-c"
+      - |
+        gcloud source repos clone ${_K8S_STATE_REPO_NAME} /cluster-state/ && \
+        cd /cluster-state/ && \
+        git checkout master || git checkout -b master && \
+        git config user.email $(gcloud auth list --filter=status:ACTIVE --format='value(account)')
+
+  # Generate the new manifest
+  - name: "gcr.io/cloud-builders/gcloud"
+    id: Generate manifest
+    entrypoint: /bin/sh
+    volumes:
+      - name: cluster-state
+        path: /cluster-state
+    args:
+      - "-c"
+      - |
+        mkdir -p /cluster-state/ultimanager-api && \
+        rm -rf /cluster-state/ultimanager-api/* && \
+        sed "s;@IMAGE_REPO@;gcr.io/$PROJECT_ID;g" deployment/deployment.yaml.tpl | \
+        sed "s;@IMAGE_NAME@;$_IMAGE_NAME;g" | \
+        sed "s;@IMAGE_TAG@;$COMMIT_SHA;g" > /cluster-state/ultimanager-api/deployment.yaml && \
+        sed "s;@IMAGE_REPO@;gcr.io/$PROJECT_ID;g" deployment/migrationJob.yaml.tpl | \
+        sed "s;@IMAGE_NAME@;$_IMAGE_NAME;g" | \
+        sed "s;@IMAGE_TAG@;$COMMIT_SHA;g" > /cluster-state/ultimanager-api/migrationJob.yaml && \
+        cp deployment/service.yaml /cluster-state/ultimanager-api/ && \
+        cp deployment/virtualService.yaml /cluster-state/ultimanager-api/
+
+  # This step pushes the manifest back to the cluster state repository
+  - name: "gcr.io/cloud-builders/gcloud"
+    id: Push manifest
+    entrypoint: /bin/sh
+    volumes:
+      - name: cluster-state
+        path: /cluster-state
+    args:
+      - "-c"
+      - |
+        set -x && \
+        cd /cluster-state/ && \
+        git add ultimanager-api/ && \
+        git commit -m "Deploying image gcr.io/${PROJECT_ID}/${_IMAGE_NAME}:${COMMIT_SHA}
+        Built from commit ${COMMIT_SHA} of repository UltiManager/ultimanager-api
+        Author: $(git log --format='%an <%ae>' -n 1 HEAD)" && \
+        git push origin master
+
+substitutions:
+  _IMAGE_NAME: ultimanager-api
