@@ -279,14 +279,21 @@ CORS_ORIGIN_ALLOW_ALL = True
 # Store files in S3
 
 if env_bool("USE_S3_STORAGE"):
-    DEFAULT_FILE_STORAGE = "custom_storages.backends.MediaStorage"
-    STATICFILES_STORAGE = "custom_storages.backends.StaticStorage"
+    DEFAULT_FILE_STORAGE = "custom_storages.aws_backends.MediaStorage"
+    STATICFILES_STORAGE = "custom_storages.aws_backends.StaticStorage"
 
     AWS_S3_OBJECT_PARAMETERS = {"CacheControl": "max-age=31536000"}
     AWS_S3_REGION_NAME = env_param("AWS_REGION")
 
     S3_BUCKET_MEDIA = env_param("S3_BUCKET_MEDIA")
     S3_BUCKET_STATIC = env_param("S3_BUCKET_STATIC")
+
+
+if env_bool("USE_GOOGLE_STORAGE"):
+    DEFAULT_FILE_STORAGE = "custom_storages.google_backends.MediaStorage"
+    STATICFILES_STORAGE = "custom_storages.google_backends.StaticStorage"
+
+    GS_BUCKET_NAME = env_param("GS_BUCKET_NAME", True)
 
 
 # Sentry Configuration

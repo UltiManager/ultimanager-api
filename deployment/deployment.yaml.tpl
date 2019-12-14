@@ -63,6 +63,12 @@ spec:
             - name: IS_HTTPS
               value: "True"
 
+            - name: GS_BUCKET_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: api-static-bucket
+                  key: GS_BUCKET_NAME
+
           ports:
             - containerPort: 8000
               name: http

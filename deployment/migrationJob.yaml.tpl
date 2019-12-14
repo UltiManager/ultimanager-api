@@ -57,5 +57,11 @@ spec:
 
             - name: IS_HTTPS
               value: "True"
+
+            - name: GS_BUCKET_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: api-static-bucket
+                  key: GS_BUCKET_NAME
       restartPolicy: Never
   backoffLimit: 4

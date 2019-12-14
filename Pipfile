@@ -24,7 +24,7 @@ sentry-sdk = "*"
 gunicorn = "*"
 psycopg2-binary = "*"
 requests = "*"
-django-storages = "*"
+django-storages = {extras = ["google"],version = "*"}
 boto3 = "*"
 django-simple-email-auth = "*"
 djangorestframework = "*"
